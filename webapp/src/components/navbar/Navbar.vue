@@ -1,31 +1,23 @@
 <template>
   <nav class="navbar">
-    <h1 class="title">Stock Simulator</h1>
+    <router-link to="/">
+      <h1 class="title">Stock Simulator</h1>
+    </router-link>
     <form class="auth-form">
-      <md-button
-        class="md-primary"
-        @click="login"
-      >Login</md-button>
-      <md-button
-        class="md-primary md-raised"
-        @click="signUp"
-      >Sign up</md-button>
+      <router-link to="/auth/signin">
+        <md-button class="md-primary">Sign in</md-button>
+      </router-link>
+      <router-link to="/auth/signup">
+        <md-button class="md-primary md-raised">Sign up</md-button>
+      </router-link>
     </form>
   </nav>
 </template>
 
 <script>
 export default {
-  name: 'Navbar',
-  methods: {
-    login () {
-      this.router.push('/auth/login');
-    },
-    signUp () {
-      this.router.push('/auth/signup');
-    }
-  }
-}
+  name: "Navbar"
+};
 </script>
 
 <style scoped>
@@ -34,12 +26,17 @@ export default {
   width: 100%;
   background: #37123c;
   color: white;
+  top: 0;
   padding: 0px 5px 0px 5px;
   display: inline-block;
+  height: 50px;
 }
 
 .title {
+  color: white;
   float: left;
+  font-size: 30px;
+  padding-top: 7px;
 }
 
 .auth-form {

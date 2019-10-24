@@ -1,21 +1,19 @@
 <template>
   <div id="app">
     <Navbar />
-    <HomePage />
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import HomePage from './pages/HomePage.vue'
-import Navbar from './components/navbar/Navbar';
+import Navbar from "./components/navbar/Navbar";
 
 export default {
-  name: 'app',
+  name: "app",
   components: {
-    HomePage,
     Navbar
   }
-}
+};
 </script>
 
 <style>
@@ -25,5 +23,7 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
+  /* Add a padding top to avoid hidding elements behind the navbar */
+  padding-top: 50px;
 }
 </style>
