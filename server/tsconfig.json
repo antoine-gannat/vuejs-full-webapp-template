@@ -3,6 +3,10 @@
         "module": "commonjs",
         "target": "esnext",
         "outDir": "dist",
-        "sourceMap": true
-    }
+        "sourceMap": true,
+        "baseUrl": "./src"
+    },
+    "include": [
+        "src/**/*"
+    ]
 }

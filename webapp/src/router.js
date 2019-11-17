@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-// Components
 import HomePage from './pages/HomePage';
 import Dashboard from './pages/Dashboard';
 import Auth from './pages/Auth';
@@ -10,7 +9,7 @@ import store from './store';
 Vue.use(VueRouter)
 
 // redirect the user to the login page if he isn't authenticated
-function authenticationCheck(to, from, next) {
+function authenticationCheck (to, from, next) {
     // check if a user exist in the store
     if (store.getters.user) {
         next();
@@ -22,7 +21,7 @@ function authenticationCheck(to, from, next) {
 }
 
 // redirect to the dashboard if logged
-function toDashboardIfAuthenticated(to, from, next) {
+function toDashboardIfAuthenticated (to, from, next) {
     if (store.getters.user) {
         next('/dashboard');
     } else {
@@ -33,9 +32,20 @@ function toDashboardIfAuthenticated(to, from, next) {
 export default new VueRouter({
     routes: [
         // Public routes
-        { path: '/', component: HomePage, beforeEnter: toDashboardIfAuthenticated },
-        { path: '/auth/:type', component: Auth },
+        {
+            path: '/',
+            component: HomePage,
+            beforeEnter: toDashboardIfAuthenticated
+        },
+        {
+            path: '/auth/:type',
+            component: Auth
+        },
         // Routes requiring an authentication
-        { path: '/dashboard', component: Dashboard, beforeEnter: authenticationCheck }
+        {
+            path: '/dashboard',
+            component: Dashboard,
+            beforeEnter: authenticationCheck
+        }
     ]
 });

@@ -4,13 +4,31 @@ info:
   title: Stock Simulator API
 servers:
   - url: http://localhost:4000
+tags:
+  - name: auth
+    description: Everything about authentication
 paths:
-  /auth/login:
+  /auth/signin/:
     post:
-      summary: Login
-      operationId: login
+      summary: signIn
+      operationId: signIn
       tags:
-        - pets
+        - auth
+      requestBody:
+        description: Credentials of the user
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
       responses:
         '200':
           description: Success

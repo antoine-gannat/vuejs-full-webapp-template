@@ -1,6 +1,6 @@
 <template>
   <main>
-    <h2>Authentication {{$route.params.type}}</h2>
+    <h2>Authentication</h2>
     <section class="container login-container">
       <div class="row">
         <SignIn />

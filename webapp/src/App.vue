@@ -2,6 +2,7 @@
   <div id="app">
     <Navbar />
     <router-view></router-view>
+    <vue-snotify></vue-snotify>
   </div>
 </template>
 
@@ -17,6 +18,8 @@ export default {
 </script>
 
 <style>
+@import "~vue-snotify/styles/material.css";
+
 /* COLORS: https://coolors.co/37123c-71677c-a99f96-dda77b-945d5e */
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
