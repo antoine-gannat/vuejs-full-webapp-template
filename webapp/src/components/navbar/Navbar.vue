@@ -3,20 +3,26 @@
     <router-link to="/">
       <h1 class="title">Stock Simulator</h1>
     </router-link>
-    <form class="auth-form">
-      <router-link to="/auth/signin">
-        <md-button class="md-primary">Sign in</md-button>
-      </router-link>
-      <router-link to="/auth/signup">
-        <md-button class="md-primary md-raised">Sign up</md-button>
-      </router-link>
-    </form>
+    <AuthLinks
+      v-if="!this.$store.getters.user"
+      class="float-right"
+    />
+    <ProfileLink
+      v-else
+      class="float-right"
+    />
   </nav>
 </template>
 
 <script>
+import AuthLinks from './AuthLinks';
+import ProfileLink from './ProfileLink';
 export default {
-  name: "Navbar"
+  name: "Navbar",
+  components: {
+    AuthLinks,
+    ProfileLink
+  }
 };
 </script>
 
@@ -37,9 +43,5 @@ export default {
   float: left;
   font-size: 30px;
   padding-top: 7px;
-}
-
-.auth-form {
-  float: right;
 }
 </style>

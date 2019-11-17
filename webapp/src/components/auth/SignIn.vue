@@ -1,5 +1,5 @@
 <template>
-  <div class="col-md-6">
+  <div>
     <h3>Sign in</h3>
     <form @submit.prevent="signIn">
       <div class="form-group">
@@ -23,14 +23,17 @@
         />
       </div>
       <div class="form-group">
-        <input
-          type="submit"
-          class="btn btn-secondary"
-          value="Sign in"
-        />
+        <a
+          href="#"
+          class="forget-passwd-link"
+        >Forgot your password?</a>
       </div>
       <div class="form-group">
-        <a href="#">Forget Password?</a>
+        <input
+          type="submit"
+          class="btn btn-primary submit-btn"
+          value="Sign in"
+        />
       </div>
     </form>
   </div>
@@ -52,13 +55,10 @@ export default {
     signIn () {
       axios.post('/api/auth/signin/', { email: this.formEmail, password: this.formPassword })
         .then((response) => {
-
-          console.log(response.data.message);
           this.$store.commit('setUser', response.data.user);
           this.$snotify.success(response.data.message);
+          this.$router.push(this.$route.query.redirect || '/dashboard');
         }).catch((err) => {
-
-          console.log(err.response.data.message);
           this.$snotify.error(err.response.data.message, 'Error !');
         });
     }
@@ -66,5 +66,8 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.forget-passwd-link {
+  color: white !important;
+}
 </style>

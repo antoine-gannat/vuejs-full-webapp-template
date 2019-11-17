@@ -19,7 +19,14 @@ export default {
 
 <style>
 @import "~vue-snotify/styles/material.css";
-
+body {
+  background: rgb(221, 167, 123);
+  background: linear-gradient(
+    180deg,
+    rgba(221, 167, 123, 1) 0%,
+    rgba(148, 93, 94, 1) 100%
+  );
+}
 /* COLORS: https://coolors.co/37123c-71677c-a99f96-dda77b-945d5e */
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;

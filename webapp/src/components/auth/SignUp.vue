@@ -1,18 +1,40 @@
 <template>
-  <div class="col-md-6">
+  <div>
     <h3>Sign up</h3>
     <form>
       <div class="form-group">
-        <input type="text" class="form-control" placeholder="Your Email *" value />
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Your Email *"
+          v-model="email"
+          required
+        />
       </div>
       <div class="form-group">
-        <input type="password" class="form-control" placeholder="Your Password *" value />
+        <input
+          type="password"
+          class="form-control"
+          placeholder="Your Password *"
+          v-model="password"
+          required
+        />
       </div>
       <div class="form-group">
-        <input type="submit" class="btn btn-primary" value="Sign up" />
+        <input
+          type="password"
+          class="form-control"
+          placeholder="Confirm your Password *"
+          v-model="passwordConfirmation"
+          required
+        />
       </div>
       <div class="form-group">
-        <a href="#">Forget Password?</a>
+        <input
+          type="submit"
+          class="btn btn-primary submit-btn"
+          value="Sign up"
+        />
       </div>
     </form>
   </div>
@@ -20,7 +42,14 @@
 
 <script>
 export default {
-  name: "SignUp"
+  name: "SignUp",
+  data: () => {
+    return {
+      email: '',
+      password: '',
+      passwordConfirmation: ''
+    }
+  }
 };
 </script>
 
