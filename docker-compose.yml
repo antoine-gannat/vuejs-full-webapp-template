@@ -1,0 +1,46 @@
+version: '3'
+services:
+  # MySQL database
+  mysql:
+    volumes:
+      - ./data/mysql:/docker-entrypoint-initdb.d
+      - mysql-volume:/var/lib/mysql
+    image: mysql:5.7
+    container_name: mysql
+    restart: always
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: $STOCKSIMULATOR_DB_PASSWORD
+      MYSQL_DATABASE: $STOCKSIMULATOR_DB_NAME
+
+  # PHPmyadmin
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    depends_on:
+      - mysql
+    links:
+      - mysql
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+    restart: always
+    ports:
+      - 8183:80
+  
+  # API
+  stock-simulator:
+    build:
+      context: ./
+      dockerfile: dockerfile
+    container_name: stock-simulator
+    ports:
+      - 80:4000
+    depends_on: 
+      - mysql
+    restart: always
+
+volumes:
+  mysql-volume:
