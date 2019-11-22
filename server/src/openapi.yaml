@@ -10,7 +10,7 @@ tags:
 paths:
   /auth/signin/:
     post:
-      summary: signIn
+      summary: Sign in the user
       operationId: signIn
       tags:
         - auth
@@ -34,3 +34,36 @@ paths:
           description: Success
         '400':
           description: Error
+        '500':
+          description: Internal Error
+  /auth/signup/:
+    post:
+      summary: Create a new account for the user
+      operationId: signUp
+      tags:
+        - auth
+      requestBody:
+        description: Account informations
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+                - username
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+                username:
+                  type: string
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Error
+        '500':
+          description: Internal Error

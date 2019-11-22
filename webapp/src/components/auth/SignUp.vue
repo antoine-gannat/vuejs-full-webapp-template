@@ -1,9 +1,10 @@
 <template>
   <div>
     <h3>Sign up</h3>
-    <form>
+    <form @submit.prevent="signUp">
       <div class="form-group">
         <input
+          name="email"
           type="text"
           class="form-control"
           placeholder="Your Email *"
@@ -13,6 +14,17 @@
       </div>
       <div class="form-group">
         <input
+          name="username"
+          type="text"
+          class="form-control"
+          placeholder="Your username *"
+          v-model="username"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <input
+          name="password"
           type="password"
           class="form-control"
           placeholder="Your Password *"
@@ -22,6 +34,7 @@
       </div>
       <div class="form-group">
         <input
+          name="password-confirm"
           type="password"
           class="form-control"
           placeholder="Confirm your Password *"
@@ -41,13 +54,37 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: "SignUp",
   data: () => {
     return {
       email: '',
+      username: '',
       password: '',
       passwordConfirmation: ''
+    }
+  },
+  methods: {
+    signUp () {
+      if (this.password !== this.passwordConfirmation) {
+        return this.$snotify.error('Passwords are not identical', 'Error !');
+      }
+      // call the api
+      axios.post('/api/auth/signup/', {
+        username: this.username,
+        email: this.email,
+        password: this.password
+      }).then(response => {
+        // set the user
+        this.$store.commit('setUser', response.data.user);
+        this.$snotify.success(response.data.message, 'Success !');
+        // redirect to the dashboard
+        this.$router.push('/dashboard');
+      }).catch(err => {
+        this.$snotify.success(err.response.data.message, 'Error !');
+      })
     }
   }
 };
