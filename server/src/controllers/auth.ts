@@ -3,7 +3,7 @@ import Cookies from 'cookies';
 import database from '../database';
 import * as bcrypt from 'bcrypt';
 import * as waterfall from 'async-waterfall';
-import HttpResponse from 'declarations/httpResponse';
+import HTTPResponse from 'declarations/httpResponse';
 // check if the username or email is already taken
 function checkUsernameAndEmail(email: string, username: string, callback: any) {
   database.query("SELECT `id` FROM `users` WHERE `email` = ? OR `username` = ?", [email, username]).then((result) => {
@@ -56,7 +56,7 @@ export function signUp(req, res) {
     }
   ],
     // waterfall result
-    function (error: HttpResponse, result) {
+    function (error: HTTPResponse, result) {
       // on error
       if (error) {
         return res.status(error.code).send(error);

@@ -1,5 +1,5 @@
 import * as mysql from 'mysql';
-import HttpResponse from './declarations/httpResponse';
+import HTTPResponse, { responses } from './declarations/httpResponse';
 
 class Database {
   db: any;
@@ -7,19 +7,18 @@ class Database {
   connect() {
     this.db = mysql.createPool({
       connectionLimit: 10,
-      host: process.env.STOCKSIMULATOR_DB_HOST,
-      user: process.env.STOCKSIMULATOR_DB_USERNAME,
-      password: process.env.STOCKSIMULATOR_DB_PASSWORD,
-      database: process.env.STOCKSIMULATOR_DB_NAME
+      host: process.env.TEMPLATE_DB_HOST,
+      user: process.env.TEMPLATE_DB_USERNAME,
+      password: process.env.TEMPLATE_DB_PASSWORD,
+      database: process.env.TEMPLATE_DB_NAME
     });
   }
   query(query: string, params?: any[]): Promise<any> {
-    if (!this.db) {
-      return new Promise((resolve, reject) => {
-        reject({ code: 500, message: 'Database not connected' });
-      });
-    }
     return (new Promise((resolve, reject) => {
+      if (!this.db) {
+        reject(responses.HTTP_500);
+        return;
+      }
       this.db.query(query, params || [], (error, results) => {
         if (error) {
           reject(this.handleDbError(error));
@@ -32,10 +31,9 @@ class Database {
   getDb() {
     return (this.db);
   }
-  private handleDbError(error): HttpResponse {
-    let response: HttpResponse = { code: 500, message: 'An internal error occured.' };
+  private handleDbError(error): HTTPResponse {
     console.error("Database request failed:", error);
-    return (response);
+    return (responses.HTTP_500);
   }
 }
 

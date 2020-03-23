@@ -1,7 +1,7 @@
 {
-  "name": "stock-simulator-server",
+  "name": "server-template",
   "version": "1.0.0",
-  "description": "Server for the stock-simulator project",
+  "description": "A template ",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -12,13 +12,6 @@
     "type": "git",
     "url": "git+ssh://git@github.com/antoine-gannat/stock-simulator.git"
   },
-  "keywords": [
-    "Stock",
-    "simulator",
-    "simulation",
-    "stock",
-    "investment"
-  ],
   "author": "Antoine GANNAT",
   "license": "ISC",
   "bugs": {

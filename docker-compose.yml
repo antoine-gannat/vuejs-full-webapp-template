@@ -11,10 +11,10 @@ services:
     ports:
       - 3306:3306
     environment:
-      MYSQL_ROOT_PASSWORD: $STOCKSIMULATOR_DB_PASSWORD
-      MYSQL_DATABASE: $STOCKSIMULATOR_DB_NAME
+      MYSQL_ROOT_PASSWORD: $TEMPLATE_DB_PASSWORD
+      MYSQL_DATABASE: $TEMPLATE_DB_NAME
 
-  # PHPmyadmin
+  # PHPMyAdmin
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: phpmyadmin
@@ -31,11 +31,11 @@ services:
       - 8183:80
   
   # API
-  stock-simulator:
+  template-server:
     build:
       context: ./
       dockerfile: dockerfile
-    container_name: stock-simulator
+    container_name: template-server
     ports:
       - 80:4000
     depends_on: 
