@@ -1,42 +1,47 @@
-import * as Fastify from 'fastify';
-import * as openapiGlue from "fastify-openapi-glue";
+import * as express from 'express';
 import * as path from 'path';
-import logger from './logger';
+import { OpenApiValidator } from 'express-openapi-validator';
+import * as  http from 'http';
+import { logger, middleware as logMiddleware } from './logger';
 import service from './service';
 import database from './database';
 
 database.connect();
 
-// Set the swagger options
-const options = {
-    specification: `${__dirname}/openapi.yaml`,
-    service: service,
-    prefix: 'api'
-};
 // Set the port
 const port = Number(process.env.PORT) || 4000;
 
-let fastify = Fastify();
+// instantiate express
+const app = express();
 
 // Register a static route to serve the client
 const staticFolder = path.join(__dirname, '../client-dist');
-console.log("Serving from-end from folder: ", staticFolder);
+logger.log("Serving from-end from folder: ", staticFolder);
 
-fastify.register(require('fastify-static'), {
-    root: staticFolder
+// Set the log middleware
+app.use(logMiddleware);
+
+app.use('/', express.static(staticFolder));
+
+new OpenApiValidator({
+  apiSpec: path.join(__dirname, 'openapi.yaml')
 })
+  .install(app)
+  .then(() => {
+    // authentication
+    app.post('/api/auth/signin/', service.signIn);
+    app.post('/api/auth/signup/', service.signUp);
 
-// Register swagger with openapiglue
-fastify.register(openapiGlue, options);
+    // Express error handler
+    app.use((err, req, res, next) => {
+      // 7. Customize errors
+      res.status(err.status || 500).json({
+        message: err.message,
+        errors: err.errors,
+      });
+    });
 
-// Set the logger
-fastify.use(logger);
-
-// Start the server
-fastify.listen(port, "0.0.0.0", (err, address) => {
-    if (err) {
-        console.error(err.message);
-        return;
-    }
-    console.log("Server listening on address", address);
-});
+    http.createServer(app).listen(port, "0.0.0.0", () => {
+      logger.log(`Dev server listening on port ${port}`);
+    });
+  })

@@ -8,7 +8,7 @@ tags:
   - name: auth
     description: Everything about authentication
 paths:
-  /auth/signin/:
+  /api/auth/signin/:
     post:
       summary: Sign in the user
       operationId: signIn
@@ -36,7 +36,7 @@ paths:
           description: Error
         '500':
           description: Internal Error
-  /auth/signup/:
+  /api/auth/signup/:
     post:
       summary: Create a new account for the user
       operationId: signUp

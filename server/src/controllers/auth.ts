@@ -70,4 +70,5 @@ export function signUp(req, res) {
 }
 
 export function signIn(req, res) {
+  res.status(501).json({ message: 'Not implemented' })
 }

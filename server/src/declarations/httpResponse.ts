@@ -4,7 +4,7 @@ export default interface HTTPResponse {
 }
 
 // Some basic predefined HTTP responses
-export const responses: Object = {
+export const responses = {
   HTTP_500: { code: 500, message: 'An internal error occured.' },
   HTTP_200: { code: 200, message: 'Success' }
 }
