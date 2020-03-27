@@ -1,5 +1,5 @@
 import * as mysql from 'mysql';
-import HTTPResponse, { responses } from './declarations/httpResponse';
+import { responses, HTTPResponse } from './declarations/httpResponse';
 
 class Database {
   db: any;

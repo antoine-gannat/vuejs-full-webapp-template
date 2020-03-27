@@ -3,7 +3,7 @@ import Cookies from 'cookies';
 import database from '../database';
 import * as bcrypt from 'bcrypt';
 import * as waterfall from 'async-waterfall';
-import HTTPResponse from 'declarations/httpResponse';
+import { reply, responses, HTTPResponse } from '../declarations/httpResponse';
 // check if the username or email is already taken
 function checkUsernameAndEmail(email: string, username: string, callback: any) {
   database.query("SELECT `id` FROM `users` WHERE `email` = ? OR `username` = ?", [email, username]).then((result) => {
@@ -59,7 +59,7 @@ export function signUp(req, res) {
     function (error: HTTPResponse, result) {
       // on error
       if (error) {
-        return res.status(error.code).send(error);
+        return reply(res, error);
       }
       // on success
       else {
@@ -70,5 +70,5 @@ export function signUp(req, res) {
 }
 
 export function signIn(req, res) {
-  res.status(501).json({ message: 'Not implemented' })
+  reply(res, responses.HTTP_501);
 }

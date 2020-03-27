@@ -1,22 +1,16 @@
 <template>
   <nav class="navbar">
     <router-link to="/">
-      <h1 class="title">Stock Simulator</h1>
+      <h1 class="title">Webapp Title</h1>
     </router-link>
-    <AuthLinks
-      v-if="!this.$store.getters.user"
-      class="float-right"
-    />
-    <ProfileLink
-      v-else
-      class="float-right"
-    />
+    <AuthLinks v-if="!this.$store.getters.user" class="float-right" />
+    <ProfileLink v-else class="float-right" />
   </nav>
 </template>
 
 <script>
-import AuthLinks from './AuthLinks';
-import ProfileLink from './ProfileLink';
+import AuthLinks from "./AuthLinks";
+import ProfileLink from "./ProfileLink";
 export default {
   name: "Navbar",
   components: {

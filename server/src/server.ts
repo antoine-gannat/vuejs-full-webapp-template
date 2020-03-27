@@ -16,7 +16,7 @@ const app = express();
 
 // Register a static route to serve the client
 const staticFolder = path.join(__dirname, '../client-dist');
-logger.log("Serving from-end from folder: ", staticFolder);
+logger.log("Serving front-end from folder: ", staticFolder);
 
 // Set the log middleware
 app.use(logMiddleware);
