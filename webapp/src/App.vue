@@ -1,20 +1,20 @@
 <template>
   <div id="app">
     <Navbar />
-    <router-view></router-view>
-    <vue-snotify></vue-snotify>
+    <router-view />
+    <vue-snotify />
   </div>
 </template>
 
 <script>
-import Navbar from "./components/navbar/Navbar";
+import Navbar from "./components/navbar/Navbar"
 
 export default {
-  name: "app",
+  name: "App",
   components: {
     Navbar
   }
-};
+}
 </script>
 
 <style>

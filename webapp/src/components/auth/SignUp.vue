@@ -4,57 +4,57 @@
     <form @submit.prevent="signUp">
       <div class="form-group">
         <input
+          v-model="email"
           name="email"
           type="text"
           class="form-control"
           placeholder="Your Email *"
-          v-model="email"
           required
-        />
+        >
       </div>
       <div class="form-group">
         <input
+          v-model="username"
           name="username"
           type="text"
           class="form-control"
           placeholder="Your username *"
-          v-model="username"
           required
-        />
+        >
       </div>
       <div class="form-group">
         <input
+          v-model="password"
           name="password"
           type="password"
           class="form-control"
           placeholder="Your Password *"
-          v-model="password"
           required
-        />
+        >
       </div>
       <div class="form-group">
         <input
+          v-model="passwordConfirmation"
           name="password-confirm"
           type="password"
           class="form-control"
           placeholder="Confirm your Password *"
-          v-model="passwordConfirmation"
           required
-        />
+        >
       </div>
       <div class="form-group">
         <input
           type="submit"
           class="btn btn-primary submit-btn"
           value="Sign up"
-        />
+        >
       </div>
     </form>
   </div>
 </template>
 
 <script>
-import axios from 'axios';
+import axios from 'axios'
 
 export default {
   name: "SignUp",
@@ -69,7 +69,7 @@ export default {
   methods: {
     signUp () {
       if (this.password !== this.passwordConfirmation) {
-        return this.$snotify.error('Passwords are not identical', 'Error !');
+        return this.$snotify.error('Passwords are not identical', 'Error !')
       }
       // call the api
       axios.post('/api/auth/signup/', {
@@ -78,16 +78,16 @@ export default {
         password: this.password
       }).then(response => {
         // set the user
-        this.$store.commit('setUser', response.data.user);
-        this.$snotify.success(response.data.message, 'Success !');
+        this.$store.commit('setUser', response.data.user)
+        this.$snotify.success(response.data.message, 'Success !')
         // redirect to the dashboard
-        this.$router.push('/dashboard');
+        this.$router.push('/dashboard')
       }).catch(err => {
-        this.$snotify.success(err.response.data.message, 'Error !');
+        this.$snotify.success(err.response.data.message, 'Error !')
       })
     }
   }
-};
+}
 </script>
 
 <style>

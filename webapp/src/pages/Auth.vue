@@ -4,23 +4,27 @@
       <div class="authentication-block">
         <nav class="authentication-nav">
           <button
-            @click.prevent="selectedPage = 'signin'"
             class="btn shadow-none"
             :class="{'selected': selectedPage === 'signin'}"
-          >Sign in</button>
+            @click.prevent="selectedPage = 'signin'"
+          >
+            Sign in
+          </button>
           <button
-            @click.prevent="selectedPage = 'signup'"
             class="btn shadow-none"
             :class="{'selected': selectedPage === 'signup'}"
-          >Sign up</button>
+            @click.prevent="selectedPage = 'signup'"
+          >
+            Sign up
+          </button>
         </nav>
         <SignIn
-          class="authentication-elem"
           v-if="selectedPage === 'signin'"
+          class="authentication-elem"
         />
         <SignUp
-          class="authentication-elem"
           v-else
+          class="authentication-elem"
         />
       </div>
     </section>
@@ -28,37 +32,36 @@
 </template>
 
 <script>
-import SignIn from "../components/auth/SignIn";
-import SignUp from "../components/auth/SignUp";
+import SignIn from "../components/auth/SignIn"
+import SignUp from "../components/auth/SignUp"
 export default {
-  name: "auth",
+  name: "Auth",
+  components: {
+    SignIn,
+    SignUp
+  },
   data: () => {
     return {
       selectedPage: 'signin'
     }
   },
-  methods: {
+  watch: {
+    $route () {
+      this.initSelectedPage()
+    }
+  },
+  mounted () {
+    this.initSelectedPage()
+  },  methods: {
     initSelectedPage () {
       // get the selected page from the url
       if (this.$route.params.type === 'signup'
         || this.$route.params.type === 'signin') {
-        this.selectedPage = this.$route.params.type;
+        this.selectedPage = this.$route.params.type
       }
     }
-  },
-  watch: {
-    $route () {
-      this.initSelectedPage();
-    }
-  },
-  mounted () {
-    this.initSelectedPage();
-  },
-  components: {
-    SignIn,
-    SignUp
   }
-};
+}
 </script>
 
 <style>

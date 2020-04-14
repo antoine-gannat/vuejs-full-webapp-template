@@ -1,10 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-
-import HomePage from './pages/HomePage';
-import Dashboard from './pages/Dashboard';
-import Auth from './pages/Auth';
-import store from './store';
+import HomePage from './pages/HomePage'
+import Dashboard from './pages/Dashboard'
+import Auth from './pages/Auth'
+import store from './store'
 
 Vue.use(VueRouter)
 
@@ -12,21 +11,19 @@ Vue.use(VueRouter)
 function authenticationCheck (to, from, next) {
   // check if a user exist in the store
   if (store.getters.user) {
-    next();
-  }
+    next()
+  } else {
   // if not, redirect to login page
-  else {
-    // eslint-disable-next-line no-console
-    next('/auth/login?redirect=' + to.fullPath);
+    next('/auth/login?redirect=' + to.fullPath)
   }
 }
 
 // redirect to the dashboard if logged
 function toDashboardIfAuthenticated (to, from, next) {
   if (store.getters.user) {
-    next('/dashboard');
+    next('/dashboard')
   } else {
-    next();
+    next()
   }
 }
 
@@ -49,4 +46,4 @@ export default new VueRouter({
       beforeEnter: authenticationCheck
     }
   ]
-});
+})

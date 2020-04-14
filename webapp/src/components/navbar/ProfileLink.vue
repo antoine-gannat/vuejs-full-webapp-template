@@ -3,8 +3,8 @@
     <img
       :src="user.avatar"
       :alt="user.username"
-    />
-    <span>{{user.username}}</span>
+    >
+    <span>{{ user.username }}</span>
   </div>
 </template>
 
@@ -13,7 +13,7 @@ export default {
   name: 'ProfileLink',
   computed: {
     user () {
-      return (this.$store.getters.user);
+      return (this.$store.getters.user)
     }
   }
 }
