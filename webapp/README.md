@@ -1,4 +1,4 @@
-# stock-simulator
+# webapp-template
 
 ## Project setup
 ```
