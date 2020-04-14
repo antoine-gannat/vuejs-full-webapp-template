@@ -1,15 +1,20 @@
-export interface HTTPResponse {
-  code: number,
-  message: string
+// custom error class, used to store an http response
+export class HTTPResponse extends Error {
+  code: number
+  constructor (httpCode: number, message: string) {
+    super(message)
+    this.code = httpCode
+  }
 }
 
 // Some basic predefined HTTP responses
 export const responses = {
-  HTTP_500: { code: 500, message: 'An internal error occured.' },
-  HTTP_501: { code: 501, message: 'Not implemented.' },
-  HTTP_200: { code: 200, message: 'Success' }
+  HTTP_500: new HTTPResponse(500, 'An internal error occured.'),
+  HTTP_501: new HTTPResponse(501, 'Not implemented.'),
+  HTTP_200: new HTTPResponse(200, 'Success.')
 }
 
-export function reply(res, response: HTTPResponse) {
-  res.status(response.code).json(response);
+// reply to a request with an HTTP response
+export function reply (res, response: HTTPResponse) {
+  res.status(response.code).json(response)
 }
