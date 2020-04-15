@@ -63,6 +63,7 @@ typings/
 # build folder
 dist
 client-dist
+server-dist
 
 # VS code
 .vs

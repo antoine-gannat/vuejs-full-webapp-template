@@ -1,0 +1,13 @@
+{
+  "name": "webapp-template",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+      "serve": "npm --prefix ./server run serve && npm --prefix ./webapp run serve",
+      "build": "npm --prefix ./server run build && npm --prefix ./webapp run build",
+      "rename": "",
+      "install": "npm --prefix ./server install && npm --prefix ./webapp install"
+  },
+  "dependencies": {
+  }
+}

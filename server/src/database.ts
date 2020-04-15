@@ -14,11 +14,14 @@ class Database {
       database: process.env.TEMPLATE_DB_NAME
     })
     // test the database connection with a simple query
-    this.query('SELECT 1').catch((err) => {
-      logger.error('Failed to connect to the database')
-      throw new Error(err)
-    })
-    logger.success('Connected to the database !')
+    this.query('SELECT 1')
+      .then(() => {
+        logger.success('Connected to the database !')
+      })
+      .catch((err) => {
+        logger.error('Failed to connect to the database')
+        throw new Error(err)
+      })
   }
 
   query (query: string, params?: any[]): Promise<any> {
