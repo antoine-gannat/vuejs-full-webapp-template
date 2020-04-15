@@ -5,13 +5,13 @@ import { logger } from './logger'
 class Database {
   db: any;
   // connect to the database
-  connect () {
+  connect() {
     this.db = mysql.createPool({
       connectionLimit: 10,
-      host: process.env.TEMPLATE_DB_HOST,
-      user: process.env.TEMPLATE_DB_USERNAME,
-      password: process.env.TEMPLATE_DB_PASSWORD,
-      database: process.env.TEMPLATE_DB_NAME
+      host: process.env.template_webapp_DB_HOST,
+      user: process.env.template_webapp_DB_USERNAME,
+      password: process.env.template_webapp_DB_PASSWORD,
+      database: process.env.template_webapp_DB_NAME
     })
     // test the database connection with a simple query
     this.query('SELECT 1')
@@ -24,7 +24,7 @@ class Database {
       })
   }
 
-  query (query: string, params?: any[]): Promise<any> {
+  query(query: string, params?: any[]): Promise<any> {
     return (new Promise((resolve, reject) => {
       if (!this.db) {
         reject(responses.HTTP_500)
@@ -40,11 +40,11 @@ class Database {
     }))
   }
 
-  getDb () {
+  getDb() {
     return (this.db)
   }
 
-  private handleDbError (error) {
+  private handleDbError(error) {
     console.error('Database request failed:', error)
     return (responses.HTTP_500)
   }

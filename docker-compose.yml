@@ -11,8 +11,8 @@ services:
     ports:
       - 3306:3306
     environment:
-      MYSQL_ROOT_PASSWORD: $template-webapp_DB_PASSWORD
-      MYSQL_DATABASE: $template-webapp_DB_NAME
+      MYSQL_ROOT_PASSWORD: $template_webapp_DB_PASSWORD
+      MYSQL_DATABASE: $template_webapp_DB_NAME
 
   # PHPMyAdmin
   phpmyadmin:
