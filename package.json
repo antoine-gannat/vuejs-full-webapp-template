@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "serve": "./node_modules/.bin/concurrently \"npm --prefix ./server run serve\" \"npm --prefix ./webapp run serve\"",
-    "build": "npm --prefix ./server run build && npm --prefix ./webapp run build",
+    "serve": "./node_modules/.bin/concurrently \"cd server && npm run serve\" \"cd webapp && npm run serve\"",
+    "build": "cd server && npm run build && cd ../webapp && npm run build",
     "rename": "",
-    "install": "npm --prefix ./server install && npm --prefix ./webapp install"
+    "install": "cd server && npm install && cd ../webapp && npm install",
+    "test": "cd server && npm run lint && cd ../webapp && npm run lint"
   },
   "dependencies": {},
   "devDependencies": {

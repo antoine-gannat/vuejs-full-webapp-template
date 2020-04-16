@@ -5,7 +5,7 @@ import { logger } from './logger'
 class Database {
   db: any;
   // connect to the database
-  connect() {
+  connect () {
     this.db = mysql.createPool({
       connectionLimit: 10,
       host: process.env.template_webapp_DB_HOST,
@@ -24,7 +24,7 @@ class Database {
       })
   }
 
-  query(query: string, params?: any[]): Promise<any> {
+  query (query: string, params?: any[]): Promise<any> {
     return (new Promise((resolve, reject) => {
       if (!this.db) {
         reject(responses.HTTP_500)
@@ -40,11 +40,11 @@ class Database {
     }))
   }
 
-  getDb() {
+  getDb () {
     return (this.db)
   }
 
-  private handleDbError(error) {
+  private handleDbError (error) {
     console.error('Database request failed:', error)
     return (responses.HTTP_500)
   }
