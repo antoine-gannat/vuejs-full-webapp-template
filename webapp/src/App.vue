@@ -26,11 +26,6 @@ export default {
 
 body {
   background: rgb(221, 167, 123);
-  background: linear-gradient(
-    180deg,
-    rgba(221, 167, 123, 1) 0%,
-    rgba(148, 93, 94, 1) 100%
-  );
 }
 
 #app {

@@ -5,6 +5,13 @@ export class HTTPResponse extends Error {
     super(message)
     this.code = httpCode
   }
+
+  toJson () {
+    return {
+      code: this.code,
+      message: this.message
+    }
+  }
 }
 
 // Some basic predefined HTTP responses
@@ -16,5 +23,5 @@ export const responses = {
 
 // reply to a request with an HTTP response
 export function reply (res, response: HTTPResponse) {
-  res.status(response.code).json(response)
+  res.status(response.code).json(response.toJson())
 }

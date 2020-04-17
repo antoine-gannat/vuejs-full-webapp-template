@@ -2,7 +2,7 @@
   <nav class="navbar">
     <router-link to="/">
       <h1 class="title">
-        Webapp Title
+        template-webapp
       </h1>
     </router-link>
     <AuthLinks

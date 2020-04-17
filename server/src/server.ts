@@ -1,4 +1,5 @@
 import * as express from 'express'
+import * as bodyParser from 'body-parser'
 import * as path from 'path'
 import { OpenApiValidator } from 'express-openapi-validator'
 import * as http from 'http'
@@ -27,6 +28,11 @@ async function start () {
 
   // Set the log middleware
   app.use(logMiddleware)
+
+  // Body parser to parse json body
+  app.use(bodyParser.json())
+
+  app.use(bodyParser.urlencoded({ extended: true }))
 
   // host the client
   app.use('/', express.static(staticFolder))
