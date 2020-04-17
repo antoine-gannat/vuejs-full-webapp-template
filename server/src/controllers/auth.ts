@@ -1,16 +1,17 @@
-import jwt from 'jsonwebtoken'
-import Cookies from 'cookies'
+import * as jwt from 'jsonwebtoken'
+import * as Cookies from 'cookies'
 import database from '../database'
 import * as bcrypt from 'bcrypt'
 import * as waterfall from 'async-waterfall'
 import { reply, responses, HTTPResponse } from '../declarations/httpResponse'
 import { logger } from '../logger'
 
-function setAuthCookie (req, res, userId: number) {
+function setAuthCookie(req, res, userId: number) {
   return new Promise((resolve, reject) => {
     const cookies = new Cookies(req, res)
-    jwt.sign(userId, process.env.TEMPLATE_JWT_PASSWORD, { expiresIn: '30d' }, (err, token) => {
+    jwt.sign({ user_id: userId }, process.env.template_webapp_JWT_PASSWORD, { expiresIn: "30d" }, (err, token) => {
       if (err) {
+        logger.error(err)
         reject(new HTTPResponse(500, 'Failed to create the access token'))
         return
       }
@@ -22,7 +23,7 @@ function setAuthCookie (req, res, userId: number) {
   })
 }
 
-export function signUp (req, res) {
+export function signUp(req, res) {
   waterfall([
     // check if the username and email are free
     function (callback) {
@@ -52,33 +53,58 @@ export function signUp (req, res) {
       database.query('INSERT INTO `users`(email, username, password) VALUES(?,?,?)',
         [req.body.email, req.body.username, hashedPassword])
         .then((insertResults) => {
-          logger.log(insertResults)
-          callback(null, insertResults.insertedId)
+          callback(null, insertResults.insertId)
         })
-        .catch((err) => callback(err))
+        .catch((err) => {
+          callback(err)
+        })
     },
     // generate and set the authentication token
     function (userId: number, callback) {
       setAuthCookie(req, res, userId)
         .then(() => {
-          callback(null)
+          callback(null, new HTTPResponse(200, "Account created !"))
         })
         .catch((err) => {
           callback(err)
         })
     }
   ],
-  // waterfall result
-  function (error: HTTPResponse, result) {
-    // on error
-    if (error) {
-      return reply(res, error)
-    }
-    // on success
-    return res.status(result.code || 200).send(result)
-  })
+    // waterfall result
+    function (error: HTTPResponse, result: HTTPResponse) {
+      // on error
+      if (error) {
+        return reply(res, error)
+      }
+      // on success
+      return reply(res, result)
+    })
 }
 
-export function signIn (req, res) {
-  reply(res, responses.HTTP_501)
+export function signIn(req, res) {
+  // get the user's hashed password from the database
+  database.query("SELECT id, password from `users` WHERE `email` = ?", [req.body.email])
+    .then((results) => {
+      // compare the passwords
+      bcrypt.compare(req.body.password, results[0].password,
+        (err, result) => {
+          // on error
+          if (err || !result) {
+            return reply(res, new HTTPResponse(400, "Invalid email or password."));
+          }
+          // on success
+          // generate and set the authetication token
+          setAuthCookie(req, res, results[0].id)
+            .then(() => {
+              reply(res, new HTTPResponse(200, "Signed in !"))
+            })
+            .catch((err) => {
+              logger.error(err.message);
+              reply(res, responses.HTTP_500);
+            })
+        })
+    })
+    .catch((err) => {
+      reply(res, new HTTPResponse(400, "Invalid email or password."));
+    })
 }
