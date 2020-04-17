@@ -6,22 +6,25 @@ class Database {
   db: any;
   // connect to the database
   connect () {
-    this.db = mysql.createPool({
-      connectionLimit: 10,
-      host: process.env.template_webapp_DB_HOST,
-      user: process.env.template_webapp_DB_USERNAME,
-      password: process.env.template_webapp_DB_PASSWORD,
-      database: process.env.template_webapp_DB_NAME
+    return new Promise((resolve, reject) => {
+      this.db = mysql.createPool({
+        connectionLimit: 10,
+        host: process.env.template_webapp_DB_HOST,
+        user: process.env.template_webapp_DB_USERNAME,
+        password: process.env.template_webapp_DB_PASSWORD,
+        database: process.env.template_webapp_DB_NAME
+      })
+      // test the database connection with a simple query
+      this.query('SELECT 1')
+        .then(() => {
+          resolve(true)
+          logger.success('Connected to the database !')
+        })
+        .catch((err) => {
+          logger.error('Failed to connect to the database')
+          reject(err)
+        })
     })
-    // test the database connection with a simple query
-    this.query('SELECT 1')
-      .then(() => {
-        logger.success('Connected to the database !')
-      })
-      .catch((err) => {
-        logger.error('Failed to connect to the database')
-        throw new Error(err)
-      })
   }
 
   query (query: string, params?: any[]): Promise<any> {
