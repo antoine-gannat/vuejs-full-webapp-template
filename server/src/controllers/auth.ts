@@ -5,12 +5,14 @@ import * as bcrypt from 'bcrypt'
 import * as waterfall from 'async-waterfall'
 import { reply, responses, HTTPResponse } from '../declarations/httpResponse'
 import { logger } from '../logger'
+import { getUserInfo } from './users'
 
-function setAuthCookie (req, res, userId: number) {
+function setAuthCookie (req, res, userId: number): Promise<void> {
   return new Promise((resolve, reject) => {
     const cookies = new Cookies(req, res)
     jwt.sign(userId, process.env.TEMPLATE_JWT_PASSWORD, { expiresIn: '30d' }, (err, token) => {
       if (err) {
+        console.log(err)
         reject(new HTTPResponse(500, 'Failed to create the access token'))
         return
       }
@@ -61,7 +63,7 @@ export function signUp (req, res) {
     function (userId: number, callback) {
       setAuthCookie(req, res, userId)
         .then(() => {
-          callback(null)
+          callback(null, userId)
         })
         .catch((err) => {
           callback(err)
@@ -69,13 +71,19 @@ export function signUp (req, res) {
     }
   ],
   // waterfall result
-  function (error: HTTPResponse, result) {
+  function (error: HTTPResponse, userId: number) {
     // on error
     if (error) {
       return reply(res, error)
     }
-    // on success
-    return res.status(result.code || 200).send(result)
+    // on success, get the user's info and send them
+    getUserInfo(userId)
+      .then((userInfo) => {
+        res.status(responses.HTTP_200.code).json(userInfo)
+      })
+      .catch((err) => {
+        reply(res, err)
+      })
   })
 }
 

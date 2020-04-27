@@ -83,7 +83,7 @@ export default {
         // redirect to the dashboard
         this.$router.push('/dashboard')
       }).catch(err => {
-        this.$snotify.success(err.response.data.message, 'Error !')
+        this.$snotify.error(err.response.data.message, 'Error !')
       })
     }
   }

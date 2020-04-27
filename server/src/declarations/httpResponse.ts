@@ -23,5 +23,9 @@ export const responses = {
 
 // reply to a request with an HTTP response
 export function reply (res, response: HTTPResponse) {
+  if (!response.toJson) {
+    console.error(response)
+    res.status(responses.HTTP_500.code).json(responses.HTTP_500.toJson())
+  }
   res.status(response.code).json(response.toJson())
 }
