@@ -6,6 +6,10 @@ import * as http from 'http'
 import { logger, middleware as logMiddleware } from './logger'
 import service from './service'
 import database from './database'
+import * as dotenv from 'dotenv'
+
+// import the env variables from the .env file
+dotenv.config()
 
 async function start () {
   // connect to the database

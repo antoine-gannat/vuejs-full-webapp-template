@@ -10,7 +10,7 @@
           class="form-control"
           placeholder="Your Email *"
           required
-        />
+        >
       </div>
       <div class="form-group">
         <input
@@ -20,13 +20,20 @@
           class="form-control"
           placeholder="Your Password *"
           required
-        />
+        >
       </div>
       <div class="form-group">
-        <a href="#" class="forget-passwd-link">Forgot your password?</a>
+        <a
+          href="#"
+          class="forget-passwd-link"
+        >Forgot your password?</a>
       </div>
       <div class="form-group">
-        <input type="submit" class="btn btn-primary submit-btn" value="Sign in" />
+        <input
+          type="submit"
+          class="btn btn-primary submit-btn"
+          value="Sign in"
+        >
       </div>
     </form>
   </div>
@@ -34,7 +41,7 @@
 
 <script>
 /* eslint-disable no-console */
-import axios from "axios";
+import axios from "axios"
 
 export default {
   name: "SignIn",
@@ -42,7 +49,7 @@ export default {
     return {
       formEmail: "",
       formPassword: ""
-    };
+    }
   },
   methods: {
     signIn() {
@@ -52,16 +59,16 @@ export default {
           password: this.formPassword
         })
         .then(response => {
-          this.$store.commit("setUser", response.data.user);
-          this.$snotify.success(response.data.message);
-          this.$router.push(this.$route.query.redirect || "/dashboard");
+          this.$store.commit("setUser", response.data.user)
+          this.$snotify.success(response.data.message)
+          this.$router.push(this.$route.query.redirect || "/dashboard")
         })
         .catch(err => {
-          this.$snotify.error(err.response.data.message, "Error !");
-        });
+          this.$snotify.error(err.response.data.message, "Error !")
+        })
     }
   }
-};
+}
 </script>
 
 <style scoped>

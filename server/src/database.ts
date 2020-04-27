@@ -1,11 +1,11 @@
 import * as mysql from 'mysql'
-import { responses, HTTPResponse } from './declarations/httpResponse'
+import { responses } from './declarations/httpResponse'
 import { logger } from './logger'
 
 class Database {
   db: any;
   // connect to the database
-  connect() {
+  connect () {
     return new Promise((resolve, reject) => {
       this.db = mysql.createPool({
         connectionLimit: 10,
@@ -27,7 +27,7 @@ class Database {
     })
   }
 
-  query(query: string, params?: any[]): Promise<any> {
+  query (query: string, params?: any[]): Promise<any> {
     return (new Promise((resolve, reject) => {
       if (!this.db) {
         reject(responses.HTTP_500)
@@ -43,11 +43,11 @@ class Database {
     }))
   }
 
-  getDb() {
+  getDb () {
     return (this.db)
   }
 
-  private handleDbError(error): HTTPResponse {
+  private handleDbError (error:any) {
     console.error('Database request failed:', error)
     return (responses.HTTP_500)
   }
