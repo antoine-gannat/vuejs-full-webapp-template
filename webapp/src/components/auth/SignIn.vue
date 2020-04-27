@@ -41,30 +41,30 @@
 
 <script>
 /* eslint-disable no-console */
-import axios from "axios"
+import axios from 'axios'
 
 export default {
-  name: "SignIn",
+  name: 'SignIn',
   data: () => {
     return {
-      formEmail: "",
-      formPassword: ""
+      formEmail: '',
+      formPassword: ''
     }
   },
   methods: {
     signIn() {
       axios
-        .post("/api/auth/signin/", {
+        .post('/api/auth/signin/', {
           email: this.formEmail,
           password: this.formPassword
         })
         .then(response => {
-          this.$store.commit("setUser", response.data.user)
-          this.$snotify.success(response.data.message)
-          this.$router.push(this.$route.query.redirect || "/dashboard")
+          this.$store.commit('setUser', response.data)
+          this.$snotify.success(null, 'Signed in !')
+          this.$router.push(this.$route.query.redirect || '/dashboard')
         })
         .catch(err => {
-          this.$snotify.error(err.response.data.message, "Error !")
+          this.$snotify.error(err.response.data.message, 'Error !')
         })
     }
   }

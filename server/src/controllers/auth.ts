@@ -1,28 +1,10 @@
-import * as jwt from 'jsonwebtoken'
-import * as Cookies from 'cookies'
-import database from '../database'
+import database from '../modules/database'
 import * as bcrypt from 'bcrypt'
 import * as waterfall from 'async-waterfall'
 import { reply, responses, HTTPResponse } from '../declarations/httpResponse'
-import { logger } from '../logger'
+import { logger } from '../modules/logger'
 import { getUserInfo } from './users'
-
-function setAuthCookie (req, res, userId: number): Promise<void> {
-  return new Promise((resolve, reject) => {
-    const cookies = new Cookies(req, res)
-    jwt.sign({ user_id: userId }, process.env.template_webapp_JWT_PASSWORD, { expiresIn: '30d' }, (err, token) => {
-      if (err) {
-        logger.error(err)
-        reject(new HTTPResponse(500, 'Failed to create the access token'))
-        return
-      }
-      // create a new cookie with the access token
-      // It will last 30 days
-      cookies.set('access-token', token, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true, sameSite: true, overwrite: true })
-      resolve()
-    })
-  })
-}
+import { setAuthCookie, getUserIdFromCookie, removeCookie, AUTH_COOKIE_NAME } from '../modules/cookies'
 
 export function signUp (req, res) {
   waterfall([
@@ -120,5 +102,29 @@ export function signIn (req, res) {
     })
     .catch(() => {
       reply(res, new HTTPResponse(400, 'Invalid email or password.'))
+    })
+}
+
+export function signOut (req, res) {
+  removeCookie(req, res, AUTH_COOKIE_NAME)
+  reply(res, responses.HTTP_200)
+}
+
+export function middleware (req, res, next) {
+  // start by getting the user's id
+  getUserIdFromCookie(req, res)
+    .then((userId) => {
+      // get the latest user's informations from the database
+      getUserInfo(userId)
+        .then((userInfo) => {
+          req.user = userInfo
+          // everything went well, go on
+          next()
+        }).catch((err) => {
+          reply(res, err)
+        })
+    })
+    .catch((err) => {
+      reply(res, err)
     })
 }

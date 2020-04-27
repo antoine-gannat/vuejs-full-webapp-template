@@ -3,9 +3,9 @@ import * as bodyParser from 'body-parser'
 import * as path from 'path'
 import { OpenApiValidator } from 'express-openapi-validator'
 import * as http from 'http'
-import { logger, middleware as logMiddleware } from './logger'
+import { logger, middleware as logMiddleware } from './modules/logger'
 import service from './service'
-import database from './database'
+import database from './modules/database'
 import * as dotenv from 'dotenv'
 
 // import the env variables from the .env file
@@ -46,9 +46,13 @@ async function start () {
   })
     .install(app)
     .then(() => {
-    // authentication
-      app.post('/api/auth/signin/', service.signIn)
-      app.post('/api/auth/signup/', service.signUp)
+      // authentication
+      app.post('/api/auth/signin/', service.auth.signIn)
+      app.post('/api/auth/signup/', service.auth.signUp)
+      app.delete('/api/auth/', service.auth.signOut)
+      // set the auth middleware
+      app.use(service.auth.middleware)
+      app.get('/api/users/myself/', service.users.getUserInfoReq)
 
       // Express error handler
       app.use((err, req, res, next) => {

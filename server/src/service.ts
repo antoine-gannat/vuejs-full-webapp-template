@@ -1,5 +1,6 @@
 import * as auth from './controllers/auth'
+import * as users from './controllers/users'
 export default {
-  signIn: auth.signIn,
-  signUp: auth.signUp
+  auth: auth,
+  users: users
 }

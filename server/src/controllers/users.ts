@@ -1,4 +1,5 @@
-import database from '../database'
+import database from '../modules/database'
+import { responses } from '../declarations/httpResponse'
 
 export interface User{
   id: number
@@ -22,4 +23,8 @@ export function getUserInfo (userId: number): Promise<User> {
         reject(err)
       })
   })
+}
+
+export function getUserInfoReq (req, res) {
+  res.status(responses.HTTP_200.code).json(req.user)
 }

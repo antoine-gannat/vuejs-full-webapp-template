@@ -7,7 +7,19 @@ servers:
 tags:
   - name: auth
     description: Everything about authentication
+  - name: users
+    description: Everything about users
 paths:
+  /api/auth/:
+    delete:
+      summary: Sign out the signed in user
+      operationId: signOut
+      tags:
+        - auth
+      responses:
+        "200":
+          $ref: "#/components/responses/Success"
+
   /api/auth/signin/:
     post:
       summary: Sign in the user
@@ -76,6 +88,29 @@ paths:
           $ref: "#/components/responses/NotFound"
         "500":
           $ref: "#/components/responses/InternalError"
+
+  /api/users/myself/:
+    get:
+      summary: Get the logged user info
+      operationId: getUserInfoReq
+      tags:
+        - users
+      responses:
+        "200":
+          description: User info
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalError"
+
 components:
   responses:
     NotFound:
@@ -115,6 +150,20 @@ components:
         code:
           type: string
         message:
+          type: string
+      required:
+        - code
+        - message
+    User:
+      type: object
+      properties:
+        id:
+          type: number
+        email:
+          type: string
+        username:
+          type: string
+        avatar:
           type: string
       required:
         - code

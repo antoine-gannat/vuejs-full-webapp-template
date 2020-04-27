@@ -1,5 +1,5 @@
 import * as mysql from 'mysql'
-import { responses } from './declarations/httpResponse'
+import { responses } from '../declarations/httpResponse'
 import { logger } from './logger'
 
 class Database {

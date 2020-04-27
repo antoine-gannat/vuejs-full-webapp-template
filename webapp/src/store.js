@@ -5,7 +5,7 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    user: null
+    user: undefined
   },
   getters: {
     user (state) {
@@ -14,8 +14,6 @@ const store = new Vuex.Store({
   },
   mutations: {
     setUser (state, user) {
-      // eslint-disable-next-line no-console
-      console.log('set user:', user)
       state.user = user
     }
   },

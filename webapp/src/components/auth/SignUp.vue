@@ -57,7 +57,7 @@
 import axios from 'axios'
 
 export default {
-  name: "SignUp",
+  name: 'SignUp',
   data: () => {
     return {
       email: '',
@@ -78,8 +78,8 @@ export default {
         password: this.password
       }).then(response => {
         // set the user
-        this.$store.commit('setUser', response.data.user)
-        this.$snotify.success(response.data.message, 'Success !')
+        this.$store.commit('setUser', response.data)
+        this.$snotify.success(null, 'Account created !')
         // redirect to the dashboard
         this.$router.push('/dashboard')
       }).catch(err => {
