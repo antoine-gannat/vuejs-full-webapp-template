@@ -17,10 +17,10 @@
 </template>
 
 <script>
-import AuthLinks from "./AuthLinks"
-import ProfileLink from "./ProfileLink"
+import AuthLinks from './AuthLinks'
+import ProfileLink from './ProfileLink'
 export default {
-  name: "Navbar",
+  name: 'Navbar',
   components: {
     AuthLinks,
     ProfileLink
