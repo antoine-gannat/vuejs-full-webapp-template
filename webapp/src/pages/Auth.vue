@@ -32,10 +32,10 @@
 </template>
 
 <script>
-import SignIn from "../components/auth/SignIn"
-import SignUp from "../components/auth/SignUp"
+import SignIn from '../components/auth/SignIn'
+import SignUp from '../components/auth/SignUp'
 export default {
-  name: "Auth",
+  name: 'Auth',
   components: {
     SignIn,
     SignUp
