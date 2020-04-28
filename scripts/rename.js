@@ -57,6 +57,11 @@ if (process.argv.length != 3){
 // get the new name from the arguements
 let newName = process.argv[2]
 
+if (newName.includes(' ')){
+  console.log("Please do not use spaces in the new project name.")
+  process.exit(0)
+}
+
 console.log("Renaming project to:", newName)
 // find every file and rename the project where its possible
 processFiles(newName)
