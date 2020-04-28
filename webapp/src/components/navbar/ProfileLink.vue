@@ -27,7 +27,10 @@ export default {
   methods: {
     logout() {
       axios.delete('/api/auth/').then(() => {
+        // set user to null
         this.$store.commit('setUser', null)
+        // redirect to the homepage
+        this.$router.push('/')
       })
     }
   }
