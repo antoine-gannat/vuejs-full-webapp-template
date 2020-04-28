@@ -1,11 +1,11 @@
 {
-  "name": "webapp-template",
+  "name": "template-webapp",
   "version": "1.0.0",
   "private": true,
   "scripts": {
     "serve": "./node_modules/.bin/concurrently \"cd server && npm run serve\" \"cd webapp && npm run serve\"",
     "build": "cd server && npm run build && cd ../webapp && npm run build",
-    "rename": "",
+    "rename": "node scripts/rename.js",
     "install": "cd server && npm install && cd ../webapp && npm install",
     "test": "cd server && npm run lint && cd ../webapp && npm run lint"
   },
