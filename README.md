@@ -19,9 +19,9 @@ First install node dependencies
 
 Then rename the project (mendatory to work with the [environment variables](#Environment-variables))
 
-    npm run rename "my-new-name"
+    npm run rename "my-project-name"
 
-_replace 'my-new-name' with the name of your project_
+_replace 'my-project-name' with the name of your project_
 
 
 ## Run

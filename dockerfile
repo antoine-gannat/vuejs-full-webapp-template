@@ -6,6 +6,13 @@ WORKDIR /app/server
 
 COPY ./server/package*.json ./
 
+RUN apk add --no-cache --virtual .gyp \
+        python \
+        make \
+        g++ \
+    && npm install bcrypt\
+    && apk del .gyp
+
 RUN npm i --prod
 
 COPY ./server/. ./
