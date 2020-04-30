@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar">
     <router-link to="/">
-      <h1 class="title">
+      <h1 class="navbar-title">
         template-webapp
       </h1>
     </router-link>
@@ -40,7 +40,7 @@ export default {
   height: 50px;
 }
 
-.title {
+.navbar-title {
   color: white;
   float: left;
   font-size: 30px;

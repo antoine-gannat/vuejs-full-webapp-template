@@ -29,7 +29,7 @@ export default {
 @import "~vue-snotify/styles/material.css";
 
 body {
-  background: rgb(221, 167, 123);
+  background: rgb(243, 243, 243);
 }
 
 #app {
