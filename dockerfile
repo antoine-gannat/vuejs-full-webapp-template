@@ -6,6 +6,8 @@ WORKDIR /app/server
 
 COPY ./server/package*.json ./
 
+# Install complementary packages to install Bcrypt
+# They will be removed afterwards
 RUN apk add --no-cache --virtual .gyp \
         python \
         make \
